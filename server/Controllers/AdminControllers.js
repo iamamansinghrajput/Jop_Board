@@ -1,5 +1,6 @@
 const job = require("../Models/Job");
 const Application =require("../Models/Application");
+const Userr = require("../Models/User");
 
 async function PostJob(req, res) {
     try {
@@ -97,6 +98,20 @@ async function getApplicationForJob(req, res) {
     }
 }
 
+async function changeRloes(req,res){
+    const{userName}=req.body;
+    try {
+        const changeRole=await Userr.findOne({userName});
+        if(changeRole.role==="admin"){
+            return res.josn("user is also admin")
+        }
+       changeRole.role="admin";
+       await changeRole.save();
+       res.json("user change to admin")
+    } catch (error) {
+        return res.status(500).json({ message: "Internal Server Error", error: error.message });
+    }
+}
 
 module.exports = {
     PostJob,
@@ -104,5 +119,6 @@ module.exports = {
     getJobByID,
     updateJobs,
     deletJobs,
-    getApplicationForJob
+    getApplicationForJob,
+    changeRloes
 };

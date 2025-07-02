@@ -9,12 +9,9 @@ const applicationSchema = new mongoose.Schema({
   jobId: { 
       type: String,
         required: true },
-  firstName: {
+  Name: {
     type: String,
     required: true,
-  },
-  lastName: {
-    type: String,
   },
   email: {
     type: String,

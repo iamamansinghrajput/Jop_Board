@@ -2,7 +2,7 @@ const Application =require("../Models/Application");
 
 async function postApplications(req,res){
     try {
-        let { userName,jobId, firstName, lastName, email, number, dob,qualification,skills} = req.body;
+        let { userName,jobId, Name, email, number, dob,qualification,skills} = req.body;
         const ckeck = await Application.findOne({jobId,userName}) ;
         if(ckeck){
             return res.json("Application all ready post");
@@ -11,8 +11,7 @@ async function postApplications(req,res){
         let newApplication = new Application({
            userName,
             jobId,
-           firstName,
-           lastName,
+           Name,
             email,
             number,
              dob,

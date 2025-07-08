@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require('cors')
+const cors = require('cors');
 const adminRoutes =require("./Routes/AdminRoutes");
 const userRoutes =require("./Routes/UserRoutes");
 const authenticate =require("./Routes/AuthenticationRoutes");
@@ -8,10 +8,12 @@ const base =require("./Routes/Base");
 const app = express();
 const port = 3000;
 
+const corsOptions = {
+  origin: ['http://localhost:3000','http://localhost:5173', 'https://jop-board.vercel.app'],
+  credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cors({ 
-  origin: ['https://jop-board.vercel.app','http://localhost:3000'],
-  credentials: true}));
 app.use('/api',adminRoutes);
 app.use('/api',userRoutes);
 app.use('/api',authenticate);

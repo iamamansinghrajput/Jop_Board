@@ -10,7 +10,7 @@ const port = 3000;
 
 app.use(express.json());
 app.use(cors({ 
-  origin: 'https://jop-board.vercel.app/', 
+  origin: ['https://jop-board.vercel.app','http://localhost:3000'],
   credentials: true}));
 app.use('/api',adminRoutes);
 app.use('/api',userRoutes);

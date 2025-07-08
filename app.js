@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors')
 const adminRoutes =require("./Routes/AdminRoutes");
 const userRoutes =require("./Routes/UserRoutes");
 const authenticate =require("./Routes/AuthenticationRoutes");

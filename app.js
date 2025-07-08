@@ -9,7 +9,9 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ 
+  origin: 'https://jop-board.vercel.app/', 
+  credentials: true}));
 app.use('/api',adminRoutes);
 app.use('/api',userRoutes);
 app.use('/api',authenticate);

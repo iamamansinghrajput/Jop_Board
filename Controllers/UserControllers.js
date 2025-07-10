@@ -1,5 +1,6 @@
 const Application =require("../Models/Application");
-
+const Userr = require("../Models/User");
+//
 async function postApplications(req,res){
     try {
         let { userName,jobId, Name, email, number, dob,qualification,skills} = req.body;
@@ -26,10 +27,10 @@ async function postApplications(req,res){
     }
 }
 
-
+//
 async function getUserApplications(req, res) {
     try {
-        const { userName } = req.body; 
+        const { userName } = req.user; 
 
         const getUser = await Application.find({ userName });
 
@@ -45,6 +46,22 @@ async function getUserApplications(req, res) {
         });
     }
 }
+//
+async function getUserData(req,res){
+    try {
+        const {userName}=req.user;
+        const getuser = await Userr.findOne({userName});
+        if(!getuser){
+            return res.status(401).json("data not found");
+        }
+        res.json(getuser);
+    } catch (error) {
+        res.status(500).json({
+            message: "Internal Server Error",
+            error: error.message
+        });
+    }
+}
 
 
-module.exports={postApplications,getUserApplications};
+module.exports={postApplications,getUserApplications,getUserData};

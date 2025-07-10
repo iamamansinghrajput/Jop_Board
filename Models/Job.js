@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
 const jobSchema = new mongoose.Schema({
-  
+userName: {
+    type: String,
+    required: true,
+    unique: true,
+  },
 title   : {
     type: String,
     required: true

@@ -50,7 +50,7 @@ api.post("/login", async (req, res) => {
   try {
     const existinguser = await Userr.find({email });
         if(existinguser.length===0){
-            res.json("user not found");
+            res.status(401).json("user not found");
             return ;
         }
     let gotuser=existinguser[0];

@@ -4,6 +4,7 @@ const adminRoutes =require("./Routes/AdminRoutes");
 const userRoutes =require("./Routes/UserRoutes");
 const authenticate =require("./Routes/AuthenticationRoutes");
 const base =require("./Routes/Base");
+const cookieParser =require("cookie-parser");
 
 const app = express();
 const port = 3000;
@@ -13,6 +14,7 @@ const corsOptions = {
   credentials: true,
 };
 app.use(cors(corsOptions));
+app.use(cookieParser());
 app.use(express.json());
 app.use('/api',adminRoutes);
 app.use('/api',userRoutes);

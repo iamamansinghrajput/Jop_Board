@@ -4,7 +4,6 @@ const applicationSchema = new mongoose.Schema({
   userName: {
     type: String,
     required: true,
-    unique: true,
   },
   jobId: { 
       type: String,

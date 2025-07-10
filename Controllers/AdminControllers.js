@@ -1,11 +1,12 @@
 const job = require("../Models/Job");
 const Application =require("../Models/Application");
 const Userr = require("../Models/User");
-
+//
 async function PostJob(req, res) {
     try {
-        let { title, company, location, category, description } = req.body;
+        let {userName, title, company, location, category, description } = req.body;
         let newjob = new job({
+            userName,
             title,
             company,
             location,
@@ -19,6 +20,7 @@ async function PostJob(req, res) {
     res.status(500).json({ message: "Internal Server Error" });
     }
 }
+//
 async function getAllJobs(req,res){
     try {
         const getAllJob = await job.find();
@@ -31,19 +33,20 @@ async function getAllJobs(req,res){
          res.status(500).json({ message: "Internal Server Error" });
     }
 }
-async function getJobByID(req,res){
-    try {
-        const {id} =req.body;
-        const getByID = await job.findById(id);
-        if(!getByID){
-            return res.json("job is not find");
-        }
-        res.json(getByID);
-    } catch (error) {
-        res.json(error);
-        res.status(500).json({ message: "Internal Server Error" });
+//
+const getJobByID = async (req, res) => {
+  try {
+    const jobs = await job.findById(req.params.id);
+    if (!jobs) {
+      return res.status(404).json({ message: 'Job not found' }); // Return early
     }
-}
+
+    return res.status(200).json(jobs); // Return job if found
+  } catch (error) {
+    console.error('Error in getJobByID:', error);
+    return res.status(500).json({ message: 'Server error', error });
+  }
+};
 
 async function updateJobs(req, res) {
     try {
@@ -97,7 +100,7 @@ async function getApplicationForJob(req, res) {
         return res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
 }
-
+//
 async function changeRloes(req,res){
     const{userName}=req.body;
     try {
@@ -113,6 +116,19 @@ async function changeRloes(req,res){
     }
 }
 
+async function getJobByAdmin(req,res){
+    const{userName}=req.user;
+    try {
+        const Getjobbyadmin= await job.find({userName});
+        if(Getjobbyadmin.length===0){
+            return res.status(404).json("jop are not found");
+        }
+        res.status(200).json(Getjobbyadmin);
+    } catch (error) {
+         return res.status(500).json({ message: "Internal Server Error", error: error.message });
+    }
+}
+
 module.exports = {
     PostJob,
     getAllJobs,
@@ -120,5 +136,6 @@ module.exports = {
     updateJobs,
     deletJobs,
     getApplicationForJob,
-    changeRloes
+    changeRloes,
+    getJobByAdmin
 };
